@@ -7,6 +7,7 @@ const app = express();
 const { sequelize } = require('./models');
 
 const authRoutes = require('./routes/authRoute');
+const userRoutes = require('./routes/userRoute');
 const corsOptions = {
     origin: ['http://localhost:3000', 'http://localhost:5173', "https://dannie-agro-frontend.onrender.com", 'https://dannieagri-products.com.ng', 'dannieagri-products.com.ng', "http://dannieagri-products.com.ng", "https://dannieagri-products.com.ng/", "https://dannieagri-products.com.ng/"],
     credentials: true,    
@@ -18,6 +19,7 @@ app.use(cors(corsOptions))
 
 // Register auth routes under /api/auth
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 // A simple public route
 app.get('/', (req, res) => res.send('API is running'));
