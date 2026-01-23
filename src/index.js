@@ -8,7 +8,7 @@ const { sequelize } = require('./models');
 
 const authRoutes = require('./routes/authRoute');
 const corsOptions = {
-    origin: ['http://localhost:3000', 'http://localhost:5173', "https://dannie-agro-frontend.onrender.com"],
+    origin: ['http://localhost:3000', 'http://localhost:5173', "https://dannie-agro-frontend.onrender.com", 'https://dannieagri-products.com.ng', 'dannieagri-products.com.ng', "http://dannieagri-products.com.ng", "https://dannieagri-products.com.ng/", "http://dannieagri-products.com.ng/"],
     credentials: true,    
   };
 
