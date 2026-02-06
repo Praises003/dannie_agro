@@ -1,4 +1,5 @@
 const authService  = require('../services/authService');
+const isProd = process.env.NODE_ENV === 'production';
 
 const register = async (req, res) => {
   try {
@@ -18,14 +19,15 @@ const register = async (req, res) => {
 };
 
 
+
 const login = async (req, res) => {
   try {
     const { token, user } = await authService.login(req.body);
 
     res.cookie('token', token, {
       httpOnly: true,
-      secure: true,
-      sameSite: 'none',
+      secure: isProd,
+      sameSite: isProd ? 'none' : 'lax',
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     });
     
