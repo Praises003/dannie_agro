@@ -17,7 +17,7 @@ const protect = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     console.log('Decoded JWT:', decoded); // Debugging log
 
-    req.user = await User.findByPk(decoded.id, {
+    req.user = await User.findByPk(decoded.userId, {
       attributes: { exclude: ['password'] }
     });
 
