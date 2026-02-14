@@ -20,6 +20,17 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    referralCode: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,
+    },
+
+    referredBy: {
+      type: DataTypes.INTEGER, // stores referrer user ID
+      allowNull: true,
+    },
+
     isAdmin: {
       type: DataTypes.BOOLEAN,
       defaultValue: false

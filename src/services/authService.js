@@ -2,34 +2,50 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 const generateJWT =  require('../utils/generateJWT')
+const generateReferralCode = require('../utils/generateReferralCode');
 
-const register = async ({ name, email, password }) => {
+const register = async (data) => {
+  const { name, email, password, referralCode } = data;
+
+  if (!referralCode) {
+    throw new Error("Referral code is required");
+  }
+
+  // Find referrer
+  const referrer = await User.findOne({
+    where: { referralCode }
+  });
+
+  if (!referrer) {
+    throw new Error("Invalid referral code");
+  }
+
+  // Prevent duplicate email
   const existingUser = await User.findOne({ where: { email } });
   if (existingUser) {
-    throw new Error('Email is already in use');
+    throw new Error("User already exists");
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
+  
+  //Prevention of self referral
+  if (email === referrer.email) {
+    throw new Error("You cannot refer yourself");
+  }
 
-  const user = await User.create({
+  const newUser = await User.create({
     name,
     email,
     password: hashedPassword,
+    referralCode: generateReferralCode(name),
+    referredBy: referrer.id,
   });
-  const userData = {
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    isAdmin: user.isAdmin
-    // include other fields if needed, but exclude password
-  };
 
+  const token = generateJWT(newUser.id);
 
- 
-  const token = generateJWT(user.id);
-
-  return { user: userData, token };
+  return { user: newUser, token };
 };
+
 
 const login = async ({ email, password }) => {
   const user = await User.findOne({ where: { email } });
@@ -49,7 +65,7 @@ const login = async ({ email, password }) => {
     { expiresIn: '1d' }
   );
 
-  return { token, user: { id: user.id, name: user.name, email: user.email, isAdmin: user.isAdmin } };
+  return { token, user: { id: user.id, name: user.name, email: user.email, isAdmin: user.isAdmin, referralCode: user.referralCode } };
 };
 
 module.exports = { register, login };
