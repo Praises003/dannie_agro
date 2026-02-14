@@ -33,7 +33,11 @@ const updateProfile = async (userId, data) => {
     id: user.id,
     name: user.name,
     email: user.email,
-    isAdmin: user.isAdmin
+    isAdmin: user.isAdmin,
+    referralCode: user.referralCode,
+    points: user.points,
+    earnings: user.earnings,
+    rank: user.rank,
   };
 };
 
