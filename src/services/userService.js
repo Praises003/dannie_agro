@@ -41,4 +41,12 @@ const updateProfile = async (userId, data) => {
   };
 };
 
-module.exports = { getProfile, updateProfile };
+const getDirectReferrals = async (userId) => {
+  const referrals = await User.findAll({
+    where: { referredBy: userId },
+    attributes: ['id', 'name', 'email', 'points', 'createdAt'],
+  });
+  return referrals;
+};
+
+module.exports = { getProfile, updateProfile, getDirectReferrals };

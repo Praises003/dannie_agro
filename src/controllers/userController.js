@@ -21,4 +21,15 @@ const updateProfile = async (req, res) => {
   }
 };
 
-module.exports = { getProfile, updateProfile };
+const getReferrals = async (req, res) => {
+  try {
+    const referrals = await userService.getDirectReferrals(req.user.id);
+    res.status(200).json(referrals);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+
+
+module.exports = { getProfile, updateProfile, getReferrals };
