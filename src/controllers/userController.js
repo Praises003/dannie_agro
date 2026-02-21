@@ -30,6 +30,16 @@ const getReferrals = async (req, res) => {
   }
 };
 
+const getReferralTree = async (req, res) => {
+  try {
+    const tree = await userService.getReferralTree(req.user.id);
+    res.status(200).json(tree);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
 
 
-module.exports = { getProfile, updateProfile, getReferrals };
+
+
+module.exports = { getProfile, updateProfile, getReferrals, getReferralTree };
