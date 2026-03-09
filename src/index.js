@@ -2,24 +2,31 @@ require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors')
+const fileUpload = require('express-fileupload');
 
 const app = express();
 const { sequelize } = require('./models');
 
 const authRoutes = require('./routes/authRoute');
 const userRoutes = require('./routes/userRoute');
+const productRoutes = require('./routes/productRoute');
 const corsOptions = {
     origin: ['http://localhost:3000', 'http://localhost:5173', "https://dannie-agro-frontend.onrender.com", 'https://dannieagri-products.com.ng', 'dannieagri-products.com.ng', "http://dannieagri-products.com.ng", "https://dannieagri-products.com.ng/", "https://dannieagri-products.com.ng/"],
     credentials: true,    
   };
 
 app.use(express.json()); // parse JSON bodies
+app.use(fileUpload({
+  useTempFiles: true,
+  tempFileDir: '/tmp/'
+}));
 app.use(cookieParser());
 app.use(cors(corsOptions))
 
 // Register auth routes under /api/auth
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/products', productRoutes);
 
 // A simple public route
 app.get('/', (req, res) => res.send('API is running'));

@@ -70,4 +70,40 @@ const getReferralTree = async (userId) => {
   return tree;
 };
 
-module.exports = { getProfile, updateProfile, getDirectReferrals, getReferralTree };
+
+
+
+// GET ALL USERS
+const getAllUsers = async () => {
+  return await User.findAll({
+    attributes: { exclude: ["password"] }
+  });
+};
+
+
+// GET USER BY ID
+const getUserById = async (id) => {
+  const user = await User.findByPk(id);
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  return user;
+};
+
+
+// DELETE USER
+const deleteUser = async (id) => {
+
+  const user = await getUserById(id);
+
+  await user.destroy();
+
+  return { message: "User deleted successfully" };
+};
+
+
+
+
+module.exports = { getProfile, updateProfile, getDirectReferrals, getReferralTree, getAllUsers, getUserById, deleteUser };

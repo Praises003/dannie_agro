@@ -42,4 +42,42 @@ const getReferralTree = async (req, res) => {
 
 
 
-module.exports = { getProfile, updateProfile, getReferrals, getReferralTree };
+// GET ALL USERS
+const getUsers = async (req, res) => {
+  try {
+
+    const users = await userService.getAllUsers();
+
+    res.status(200).json(users);
+
+  } catch (error) {
+
+    res.status(500).json({
+      error: error.message
+    });
+
+  }
+};
+
+
+// DELETE USER
+const deleteUser = async (req, res) => {
+
+  try {
+
+    const result = await userService.deleteUser(req.params.id);
+
+    res.status(200).json(result);
+
+  } catch (error) {
+
+    res.status(400).json({
+      error: error.message
+    });
+
+  }
+};
+
+
+
+module.exports = { getProfile, updateProfile, getReferrals, getReferralTree, getUsers, deleteUser };
