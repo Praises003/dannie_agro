@@ -70,3 +70,5 @@ const removeCartItem = async (cartItemId) => {
 
   return { message: "Item removed from cart" };
 };
+
+module.exports = {addToCart, getCart, removeCartItem}
