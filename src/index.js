@@ -10,6 +10,7 @@ const { sequelize } = require('./models');
 const authRoutes = require('./routes/authRoute');
 const userRoutes = require('./routes/userRoute');
 const productRoutes = require('./routes/productRoute');
+const cartRoutes = require("./routes/cartRoutes");
 const corsOptions = {
     origin: ['http://localhost:3000', 'http://localhost:5173', "https://dannie-agro-frontend.onrender.com", 'https://dannieagri-products.com.ng', 'dannieagri-products.com.ng', "http://dannieagri-products.com.ng", "https://dannieagri-products.com.ng/", "https://dannieagri-products.com.ng/"],
     credentials: true,    
@@ -27,6 +28,7 @@ app.use(cors(corsOptions))
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
+app.use("/api/cart", cartRoutes);
 
 // A simple public route
 app.get('/', (req, res) => res.send('API is running'));

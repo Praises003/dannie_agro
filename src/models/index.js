@@ -20,4 +20,20 @@ fs.readdirSync(__dirname)
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+
+db.Cart.belongsTo(db.User, {
+  foreignKey: "userId"
+});
+
+db.Cart.hasMany(db.CartItem, {
+  foreignKey: "cartId"
+});
+
+db.CartItem.belongsTo(db.Cart, {
+  foreignKey: "cartId"
+});
+
+db.CartItem.belongsTo(db.Product, {
+  foreignKey: "productId"
+});
 module.exports = db;
