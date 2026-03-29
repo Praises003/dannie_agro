@@ -82,7 +82,7 @@ const deleteUser = async (req, res) => {
 
 // controllers/user.controller.js
 
-exports.completeOnboarding = async (req, res) => {
+const completeOnboarding = async (req, res) => {
   try {
     const userId = req.user.id;
 
