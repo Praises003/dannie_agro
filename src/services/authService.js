@@ -102,6 +102,7 @@ const registerUser = async ({ name, email, password, referralCode }) => {
     password: hashedPassword,
     referralCode: newReferralCode,
     referredBy: referrerId,
+    onboardingCompleted: false,
   });
 
   const token = generateJWT(newUser.id);

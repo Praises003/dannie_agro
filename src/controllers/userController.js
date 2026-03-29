@@ -1,4 +1,6 @@
 const userService = require('../services/userService');
+const { User } = require('../models');
+
 
 const getProfile = async (req, res) => {
   try {
@@ -78,6 +80,50 @@ const deleteUser = async (req, res) => {
   }
 };
 
+// controllers/user.controller.js
+
+exports.completeOnboarding = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const {
+      fullName,
+      username,
+      dateOfBirth,
+      phoneNumber,
+      altPhoneNumber,
+      address,
+      nin,
+      bankName,
+      accountNumber,
+      accountName,
+      preferredCommunication,
+    } = req.body;
+
+    const user = await User.findByPk(userId);
+
+    await user.update({
+      fullName,
+      username,
+      dateOfBirth,
+      phoneNumber,
+      altPhoneNumber,
+      address,
+      nin,
+      bankName,
+      accountNumber,
+      accountName,
+      preferredCommunication,
+      onboardingCompleted: true,
+    });
+
+    res.json({ message: "Onboarding completed", user });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
 
 
-module.exports = { getProfile, updateProfile, getReferrals, getReferralTree, getUsers, deleteUser };
+
+module.exports = { getProfile, updateProfile, getReferrals, getReferralTree, getUsers, deleteUser, completeOnboarding };

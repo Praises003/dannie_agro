@@ -12,7 +12,7 @@ const register = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
 
-    res.status(201).json({ message: 'User registered successfully', user });
+    res.status(201).json({ message: 'User registered successfully', user, onboardingCompleted: user.onboardingCompleted });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -29,7 +29,7 @@ const login = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
 
-    res.status(200).json({ message: 'Login successful', user });
+    res.status(200).json({ message: 'Login successful', user, onboardingCompleted: user.onboardingCompleted });
   } catch (err) {
     res.status(401).json({ error: err.message });
   }

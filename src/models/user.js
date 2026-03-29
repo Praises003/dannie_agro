@@ -34,7 +34,24 @@ module.exports = (sequelize) => {
     isAdmin: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
-    }
+    },
+
+    onboardingCompleted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+
+    fullName: DataTypes.STRING,
+    username: DataTypes.STRING,
+    dateOfBirth: DataTypes.DATE,
+    phoneNumber: DataTypes.STRING,
+    altPhoneNumber: DataTypes.STRING,
+    address: DataTypes.TEXT,
+    nin: DataTypes.STRING,
+    bankName: DataTypes.STRING,
+    accountNumber: DataTypes.STRING,
+    accountName: DataTypes.STRING,
+    preferredCommunication: DataTypes.STRING,
   });
 
   return User;
